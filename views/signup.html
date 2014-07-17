@@ -1,0 +1,33 @@
+{% extends "blog_template.html" %}
+{% block body %}
+    <h2>Registrar</h2>
+    <form method="post">
+        <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" class="form-control"  placeholder="Usuario" name="username" value="{{username}}">
+            <label class="alert-danger">{{username_error}}</label>
+        </div>
+
+        <div class="form-group">
+            <label>Senha</label>
+            <input type="password" class="form-control"  placeholder="Senha" name="password" value="">
+            <label class="alert-danger">{{password_error}}</label>
+        </div>
+
+        <div class="form-group">
+            <label>Poderia digitar a senha novamente?</label>
+            <input type="password" class="form-control"  placeholder="Senha" name="verify" value="">
+            <label class="alert-danger">{{verify_error}}</label>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control"  placeholder="Email" name="email" value="{{email}}">
+            <label class="alert-danger">{{email_error}}</label>
+        </div>
+        <div class="form-group">
+            <a class="btn btn-danger"  href="/">Voltar</a>
+            <button type="submit" class="btn btn-success">Registrar</button>
+        </div>
+    </form>
+{% endblock %}

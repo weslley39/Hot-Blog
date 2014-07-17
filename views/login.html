@@ -1,0 +1,24 @@
+{% extends "blog_template.html" %}
+    {% block body %}
+    <h2>Logar</h2>
+    <form method="post">
+        <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" class="form-control"  placeholder="Usuario" name="username" value="{{username}}">
+            <label class="alert-danger">{{username_error}}</label>
+        </div>
+
+        <div class="form-group">
+            <label>Senha</label>
+            <input type="password" class="form-control"  placeholder="Senha" name="password" value="">
+            <label class="alert-danger">{{password_error}}</label>
+        </div>
+
+        <label class="alert-danger">{{login_error}}</label>
+
+        <div class="form-group">
+            <a class="btn btn-danger"  href="/">Voltar</a>
+            <button type="submit" class="btn btn-success">Logar</button>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "blog_template.html" %}
+{% block body %}
+
+<form action="/newpost" method="POST">
+    <div class="alert-danger">
+        {{errors}}
+    </div>
+
+<h2>Novo Post</h2>
+    <div class="form-group">
+        <label>Título</label>
+        <input type="text" class="form-control"  placeholder="Título" name="subject" value="{{subject}}">
+    </div>
+
+    <div class="form-group">
+        <label>Descrição</label>
+        <textarea class="form-control" name="body" cols="120" rows="20">{{body}}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Tags</label>
+        <input type="text" class="form-control"  placeholder="Cars, Mobile" name="tags" value="{{tags}}">
+    </div>
+
+    <div class="form-group">
+        <a class="btn btn-danger" href="/">Voltar</a>
+        <button type="submit" class="btn btn-success">Salvar</button>
+    </div>
+
+{% endblock %}
