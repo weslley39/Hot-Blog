@@ -1,13 +1,13 @@
 var crypto = require('crypto');
 
-/* The SessionsDAO must be constructed with a connected database object */
+/* O SessionsDAO deve ser construido com um objeto database conectado*/
 function SessionsDAO(db) {
     "use strict";
 
-    /* If this constructor is called without the "new" operator, "this" points
-     * to the global object. Log a warning and call it correctly. */
-    if (false === (this instanceof SessionsDAO)) {
-        console.log('Warning: SessionsDAO constructor called without "new" operator');
+     /* Se o for construido sem o operador "new", "this" aponta para
+     * o objeto global. Mostra um log de warning e chama o mesmo corretamente. */
+     if (false === (this instanceof SessionsDAO)) {
+         console.log('Erro: SessionsDAO chamado sem o "new"');
         return new SessionsDAO(db);
     }
 
@@ -16,15 +16,15 @@ function SessionsDAO(db) {
     this.startSession = function(username, callback) {
         "use strict";
 
-        // Generate session id
+        // Gera um Id de Sessao
         var current_date = (new Date()).valueOf().toString();
         var random = Math.random().toString();
         var session_id = crypto.createHash('sha1').update(current_date + random).digest('hex');
 
-        // Create session document
+        // Cria um documento de Sessao
         var session = {'username': username, '_id': session_id}
 
-        // Insert session document
+        // Inseri o documento de Sessao
         sessions.insert(session, function (err, result) {
             "use strict";
             callback(err, session_id);
@@ -43,7 +43,7 @@ function SessionsDAO(db) {
         "use strict";
 
         if (!session_id) {
-            callback(Error("Session not set"), null);
+            callback(Error("Session não setada!"), null);
             return;
         }
 
@@ -53,7 +53,7 @@ function SessionsDAO(db) {
             if (err) return callback(err, null);
 
             if (!session) {
-                callback(new Error("Session: " + session + " does not exist"), null);
+                callback(new Error("Sessao: " + session + " nao existe!"), null);
                 return;
             }
 

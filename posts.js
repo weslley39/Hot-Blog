@@ -1,11 +1,11 @@
-/* The PostsDAO must be constructed with a connected database object */
+/* PostsDAO deve ser construido com um objeto de conexão para funcionar */
 function PostsDAO(db) {
     "use strict";
 
-    /* If this constructor is called without the "new" operator, "this" points
-     * to the global object. Log a warning and call it correctly. */
-    if (false === (this instanceof PostsDAO)) {
-        console.log('Warning: PostsDAO constructor called without "new" operator');
+    /* Se esse construtor for chamado sem o "new", "this" aponta para o
+     * objeto global. Mostra um log de warning e chama o mesmo corretamente. */
+     if (false === (this instanceof PostsDAO)) {
+        console.log('Erro: PostsDAO chamado sem o "new"');
         return new PostsDAO(db);
     }
 
@@ -13,13 +13,12 @@ function PostsDAO(db) {
 
     this.insertEntry = function (title, body, tags, author, callback) {
         "use strict";
-        console.log("inserting blog entry" + title + body);
+        console.log("Inserindo Nova Entrada no Hot Blog" + title + body);
 
-        // fix up the permalink to not include whitespace
         var permalink = title.replace( /\s/g, '_' );
         permalink = permalink.replace( /\W/g, '' );
 
-        // Build a new post
+        // Constrói um novo Post
         var post = {"title": title,
                 "author": author,
                 "body": body,
@@ -33,10 +32,9 @@ function PostsDAO(db) {
 
             if (err) return callback(err, null);
 
-            console.log("Inserted new post");
+            console.log("Novo Post Inserido com SUCESSO!");
             callback(err, permalink);
         });
-        //callback(Error("insertEntry NYI"), null);
     }
 
     this.getPosts = function(num, callback) {
@@ -47,7 +45,7 @@ function PostsDAO(db) {
 
             if (err) return callback(err, null);
 
-            console.log("Found " + items.length + " posts");
+            console.log("Foram encontrados " + items.length + " posts");
 
             callback(err, items);
         });
@@ -61,7 +59,7 @@ function PostsDAO(db) {
 
             if (err) return callback(err, null);
 
-            console.log("Found " + items.length + " posts");
+            console.log("Foram Encontrados " + items.length + " posts");
 
             callback(err, items);
         });
@@ -87,7 +85,6 @@ function PostsDAO(db) {
             comment['email'] = email
         }
 
-        // hw3.3 TODO
         var query = {'permalink': permalink};
         posts.findOne(query, function(err, post) {
             "use strict";
@@ -99,12 +96,11 @@ function PostsDAO(db) {
             posts.update(query, post, function(err, updated) {
                 if(err) throw err;
 
-                console.dir("Successfully updated " + updated + " document!");
+                console.dir("Documento alterado com SUCESSO! " + updated);
 
                 callback(err, updated[0]);
             });
         });
-        //callback(Error("addComment NYI"), null);
     }
 }
 

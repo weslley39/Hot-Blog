@@ -1,7 +1,7 @@
 var UsersDAO = require('../users').UsersDAO
   , SessionsDAO = require('../sessions').SessionsDAO;
 
-/* The SessionHandler must be constructed with a connected db */
+/* O SessionHandler deve ser construido com um banco conectado */
 function SessionHandler (db) {
     "use strict";
 
@@ -38,13 +38,13 @@ function SessionHandler (db) {
 
             if (err) {
                 if (err.no_such_user) {
-                    return res.render("login", {username:username, password:"", login_error:"No such user"});
+                    return res.render("login", {username:username, password:"", login_error:"Nçao parece ser um usuario válido"});
                 }
                 else if (err.invalid_password) {
-                    return res.render("login", {username:username, password:"", login_error:"Invalid password"});
+                    return res.render("login", {username:username, password:"", login_error:"Senha Invalida"});
                 }
                 else {
-                    // Some other kind of error
+                    // Outros erros
                     return next(err);
                 }
             }
@@ -67,7 +67,7 @@ function SessionHandler (db) {
         sessions.endSession(session_id, function (err) {
             "use strict";
 
-            // Even if the user wasn't logged in, redirect to home
+            // Se o usuario não estiver logado, mesmo assim, redireciona para a Home
             res.cookie('session', '');
             return res.redirect('/');
         });
@@ -93,20 +93,20 @@ function SessionHandler (db) {
         errors['email_error'] = "";
 
         if (!USER_RE.test(username)) {
-            errors['username_error'] = "invalid username. try just letters and numbers";
+            errors['username_error'] = "Usuario invalido. Tente apenas letras e numeros";
             return false;
         }
         if (!PASS_RE.test(password)) {
-            errors['password_error'] = "invalid password.";
+            errors['password_error'] = "Senha Inválida.";
             return false;
         }
         if (password != verify) {
-            errors['verify_error'] = "password must match";
+            errors['verify_error'] = "As Senhas devem ser identicas.";
             return false;
         }
         if (email != "") {
             if (!EMAIL_RE.test(email)) {
-                errors['email_error'] = "invalid email address";
+                errors['email_error'] = "Email Inválido";
                 return false;
             }
         }
@@ -121,7 +121,6 @@ function SessionHandler (db) {
         var password = req.body.password
         var verify = req.body.verify
 
-        // set these up in case we have an error case
         var errors = {'username': username, 'email': email}
         if (validateSignup(username, password, verify, email, errors)) {
             users.addUser(username, password, email, function(err, user) {
@@ -130,10 +129,10 @@ function SessionHandler (db) {
                 if (err) {
                     // this was a duplicate
                     if (err.code == '11000') {
-                        errors['username_error'] = "Username already in use. Please choose another";
+                        errors['username_error'] = "Usuario ja cadastrado, escolha outro nome!";
                         return res.render("signup", errors);
                     }
-                    // this was a different error
+                    // Outros erros
                     else {
                         return next(err);
                     }
@@ -150,7 +149,7 @@ function SessionHandler (db) {
             });
         }
         else {
-            console.log("user did not validate");
+            console.log("Usuario nao validado");
             return res.render("signup", errors);
         }
     }
@@ -159,7 +158,7 @@ function SessionHandler (db) {
         "use strict";
 
         if (!req.username) {
-            console.log("welcome: can't identify user...redirecting to signup");
+            console.log("Bem Vinod: Usuario nao identificado...redirecionado");
             return res.redirect("/signup");
         }
 

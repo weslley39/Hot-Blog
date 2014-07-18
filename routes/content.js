@@ -1,7 +1,7 @@
 var PostsDAO = require('../posts').PostsDAO
-  , sanitize = require('validator').sanitize; // Helper to sanitize form input
+  , sanitize = require('validator').sanitize;
 
-/* The ContentHandler must be constructed with a connected db */
+/* O ContentHandler deve ser construido com um banco conectado */
 function ContentHandler (db) {
     "use strict";
 
@@ -53,7 +53,7 @@ function ContentHandler (db) {
 
             if (!post) return res.redirect("/post_not_found");
 
-            // init comment form fields for additional comment
+            // Inicia o form de comentarios em branco
             var comment = {'name': req.username, 'body': "", 'email': ""}
 
             return res.render('entry_template', {
@@ -73,13 +73,13 @@ function ContentHandler (db) {
         var body = req.body.commentBody;
         var permalink = req.body.permalink;
 
-        // Override the comment with our actual user name if found
+        // Substitui o comentario com o atual username se for encontrado
         if (req.username) {
             name = req.username;
         }
 
         if (!name || !body) {
-            // user did not fill in enough information
+            // Se o usuario nao colocar as informacoes necessarias
 
             posts.getPostByPermalink(permalink, function(err, post) {
                 "use strict";
@@ -88,10 +88,10 @@ function ContentHandler (db) {
 
                 if (!post) return res.redirect("/post_not_found");
 
-                // init comment form fields for additional comment
+                // Inicia o form de comentarios em branco
                 var comment = {'name': name, 'body': "", 'email': ""}
 
-                var errors = "Post must contain your name and an actual comment."
+                var errors = "O Post deve conter seu name e seu comentario atual."
                 return res.render('entry_template', {
                     title: 'blog post',
                     username: req.username,
@@ -104,7 +104,7 @@ function ContentHandler (db) {
             return;
         }
 
-        // even if there is no logged in user, we can still post a comment
+        // Mesmo o usuario não estando logado, ele pode estar comentando
         posts.addComment(permalink, name, email, body, function(err, updated) {
             "use strict";
 
@@ -118,7 +118,7 @@ function ContentHandler (db) {
 
     this.displayPostNotFound = function(req, res, next) {
         "use strict";
-        return res.send('Sorry, post not found', 404);
+        return res.send('Desculpe, post nao encontrado!', 404);
     }
 
     this.displayNewPostPage = function(req, res, next) {
@@ -161,16 +161,16 @@ function ContentHandler (db) {
         if (!req.username) return res.redirect("/signup");
 
         if (!title || !post) {
-            var errors = "Post must contain a title and blog entry";
+            var errors = "O post deve conter um titulo e uma descricao";
             return res.render("newpost_template", {subject:title, username:req.username, body:post, tags:tags, errors:errors});
         }
 
         var tags_array = extract_tags(tags)
 
-        // looks like a good entry, insert it escaped
+        // Se tudo estiver correto, insere
         var escaped_post = sanitize(post).escape();
 
-        // substitute some <br> for the paragraph breaks
+        // Substitui os <br> por paragrafos
         var formatted_post = escaped_post.replace(/\r?\n/g,'<br>');
 
         posts.insertEntry(title, formatted_post, tags_array, req.username, function(err, permalink) {
@@ -178,7 +178,7 @@ function ContentHandler (db) {
 
             if (err) return next(err);
 
-            // now redirect to the blog permalink
+            // entao, redireciona para o permalink
             return res.redirect("/post/" + permalink)
         });
     }

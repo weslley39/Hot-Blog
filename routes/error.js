@@ -1,4 +1,4 @@
-// Error handling middleware
+// Pagina de Erros
 
 exports.errorHandler = function(err, req, res, next) {
     "use strict";

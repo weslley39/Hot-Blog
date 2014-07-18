@@ -7,38 +7,38 @@ module.exports = exports = function(app, db) {
     var sessionHandler = new SessionHandler(db);
     var contentHandler = new ContentHandler(db);
 
-    // Middleware to see if a user is logged in
+    // Verificar se o usuario esta logado
     app.use(sessionHandler.isLoggedInMiddleware);
 
-    // The main page of the blog
+    // Home Page do Hot Blog
     app.get('/', contentHandler.displayMainPage);
 
-    // The main page of the blog, filtered by tag
+    // A pagina inicial do Hot Blog, com filtro
     app.get('/tag/:tag', contentHandler.displayMainPageByTag);
 
-    // A single post, which can be commented on
+    // Simples Post, que pode ser comentado
     app.get("/post/:permalink", contentHandler.displayPostByPermalink);
     app.post('/newcomment', contentHandler.handleNewComment);
     app.get("/post_not_found", contentHandler.displayPostNotFound);
 
-    // Displays the form allowing a user to add a new post. Only works for logged in users
+    // Mostra o form deixando o usuario adicionar um novo post. Apenas para usuarios logados
     app.get('/newpost', contentHandler.displayNewPostPage);
     app.post('/newpost', contentHandler.handleNewPost);
 
-    // Login form
+    // Form de Login
     app.get('/login', sessionHandler.displayLoginPage);
     app.post('/login', sessionHandler.handleLoginRequest);
 
-    // Logout page
+    // Logout da pagina
     app.get('/logout', sessionHandler.displayLogoutPage);
 
-    // Welcome page
+    // Pagina de Boas Vindas
     app.get("/welcome", sessionHandler.displayWelcomePage);
 
-    // Signup form
+    // Form de Registro
     app.get('/signup', sessionHandler.displaySignupPage);
     app.post('/signup', sessionHandler.handleSignup);
 
-    // Error handling middleware
+    // Erros
     app.use(ErrorHandler);
 }

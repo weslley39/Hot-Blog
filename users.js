@@ -1,12 +1,12 @@
 var bcrypt = require('bcrypt-nodejs');
 
-/* The UsersDAO must be constructed with a connected database object */
+/* O UsersDAO deve ser construido com um objeto database conectado*/
 function UsersDAO(db) {
     "use strict";
 
-    /* If this constructor is called without the "new" operator, "this" points
-     * to the global object. Log a warning and call it correctly. */
-    if (false === (this instanceof UsersDAO)) {
+    /* Se o for construido sem o operador "new", "this" aponta para
+     * o objeto global. Mostra um log de warning e chama o mesmo corretamente. */
+     if (false === (this instanceof UsersDAO)) {
         console.log('Warning: UsersDAO constructor called without "new" operator');
         return new UsersDAO(db);
     }
@@ -16,14 +16,14 @@ function UsersDAO(db) {
     this.addUser = function(username, password, email, callback) {
         "use strict";
 
-        // Generate password hash
+        // Gera um hash password
         var salt = bcrypt.genSaltSync();
         var password_hash = bcrypt.hashSync(password, salt);
 
-        // Create user document
+        // Cria um novo User
         var user = {'_id': username, 'password': password_hash};
 
-        // Add email if set
+        // Caso o email for passado, seta ele
         if (email != "") {
             user['email'] = email;
         }
@@ -32,7 +32,7 @@ function UsersDAO(db) {
             "use strict";
 
             if (!err) {
-                console.log("Inserted new user");
+                console.log("Novo Usuario Cadastrado!");
                 return callback(null, result[0]);
             }
 
@@ -43,7 +43,7 @@ function UsersDAO(db) {
     this.validateLogin = function(username, password, callback) {
         "use strict";
 
-        // Callback to pass to MongoDB that validates a user document
+        // Callback para passar para o Mongo que valida o documento
         function validateUserDoc(err, user) {
             "use strict";
 
@@ -54,15 +54,17 @@ function UsersDAO(db) {
                     callback(null, user);
                 }
                 else {
-                    var invalid_password_error = new Error("Invalid password");
-                    // Set an extra field so we can distinguish this from a db error
+                    var invalid_password_error = new Error("Senha Inválida");
+
+                    // Seta um campo extra para distinguir este de um db error
                     invalid_password_error.invalid_password = true;
                     callback(invalid_password_error, null);
                 }
             }
             else {
-                var no_such_user_error = new Error("User: " + user + " does not exist");
-                // Set an extra field so we can distinguish this from a db error
+                var no_such_user_error = new Error("Usuario: " + user + " nao existe!");
+
+                // Seta um campo extra para distinguir este de um db error
                 no_such_user_error.no_such_user = true;
                 callback(no_such_user_error, null);
             }
