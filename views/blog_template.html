@@ -2,7 +2,8 @@
 <html>
 <head>
 <title>Hot Blog</title>
- <link rel="stylesheet" href="/css/bootstrap.css">
+ <link rel="stylesheet" href="/css/bootstrap.min.css">
+ <link rel="stylesheet" href="/css/font-awesome.min.css">
 </head>
 <body>
 {% include "_navbar.html" %}
@@ -12,8 +13,8 @@
     {% block body %}
     {% for post in myposts %}
     <h2><a href="/post/{{post['permalink']}}">{{post['title']}}</a></h2>
-    Posted {{post['date']}} <i>By {{post['author']}}</i><br>
-    Comments:
+    Postado {{post['date']|date('d-m-Y') }} <i>, por {{post['author']}}</i><br>
+    Comentários:
     <a href="/post/{{post['permalink']}}">{{post['comments'].length}}</a>
     <hr>
     {% autoescape false %}
@@ -21,7 +22,7 @@
     {% endautoescape %}
     <p>
     <p>
-    <em>Filed Under</em>:
+    <em>Filtros: </em>:
     {% for tag in post.tags %}
         {% if loop.first %}
             <a href="/tag/{{tag}}">{{tag}}</a>

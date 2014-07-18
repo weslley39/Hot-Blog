@@ -2,7 +2,7 @@
 {% block body %}
 
 <h2>{{post['title']}}</h2>
-Postado {{post['date']|date('d-m-Y') }}<i> Por {{post['author']}}</i><br>
+Postado {{post['date']|date('d-m-Y') }}<i> , por {{post['author']}}</i><br>
 <hr>
 {% autoescape false %}
 {{post['body']}}
@@ -17,25 +17,39 @@ Postado {{post['date']|date('d-m-Y') }}<i> Por {{post['author']}}</i><br>
     {% endif %}
 {% endfor %}
 <p>
-Comentários:
+<hr>
+<h2>Comentários:</h2>
+
 <ul>
 {% for comment in post.comments %}
-Author: {{comment['author']}}<br>
+<b>Nome:</b> {{comment['author']}}<br>
 {{comment['body']}}<br>
 <hr>
 {% endfor %}
-<h3>Quer Comentar?</h3>
+<h4>Quer Comentar?</h3>
 <form action="/newcomment" method="POST">
-<input type="hidden" name="permalink", value="{{post['permalink']}}">
-<h4>{{errors}}</h4>
-<b>Name</b> (required)<br>
-<input type="text" name="commentName" size="60" value="{{comment['name']}}"><br>
-<b>Email</b> (optional)<br>
-<input type="text" name="commentEmail" size="60" value="{{comment['email']}}"><br>
-<b>Comment</b><br>
-<textarea name="commentBody" cols="60" rows="10">{{comment['body']}}</textarea><br>
-<input type="submit" value="Submit">
-</ul>
+    <input type="hidden" name="permalink" value="{{post['permalink']}}">
+    <span class="alert-danger">{{errors}}</span>
+    <div class="form-group">
+        <label>Nome*</label>
+        <input type="text" class="form-control"  placeholder="Usuario" name="commentName" value="{{comment['name']}}">
+    </div>
+
+    <div class="form-group">
+        <label>Email*</label>
+        <input type="text" class="form-control"  placeholder="Usuario" name="commentEmail" value="{{comment['email']}}">
+    </div>
+
+    <div class="form-group">
+        <label>Comentário</label>
+        <textarea class="form-control" name="commentBody" cols="60" rows="10">{{comment['body']}}</textarea>
+    </div>
+
+    <div class="form-group">
+        <a class="btn btn-danger"  href="/"><i class="fa fa-reply"></i>&nbsp;Voltar</a>
+        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Enviar</button>
+    </div>
+
 
 {% endblock %}
 

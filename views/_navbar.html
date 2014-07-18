@@ -3,12 +3,17 @@
         color: #ffffff !important;
     }
     .btn-header-success:hover{
-        olor: #FFF !important;
+        color: #FFF !important;
         background-color: #449D44 !important;
     }
     .btn-header-danger:hover{
-        olor: #FFF !important;
+        color: #FFF !important;
         background-color: #C9302C !important;
+    }
+
+    .btn-header-info:hover{
+        color: #FFF !important;
+        background-color: #31B0D5 !important;
     }
 </style>
 <nav class="navbar-inverse">
@@ -19,11 +24,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Hot Blog</a>
+        <a class="navbar-brand"><img src="/imgs/logo.png" style="margin-top: -13px;"></a>
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="/"><i class="fa fa-home"></i> &nbsp;Home</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if username %}
@@ -31,13 +36,21 @@
                 <a style="color: white">Olá {{username}}!</a>
             </li>
             <li>
-                <a href="/newpost" class="btn-success btn-header btn-header-success">Novo Post</a>
+                <a href="/newpost" class="btn-success btn-header btn-header-success"><i class="fa fa-plus"></i>&nbsp;Novo Post</a>
             </li>
             <li>
-                <a href="/logout" class="btn-danger btn-header btn-header-danger">Sair</a>
+                <a href="/logout" class="btn-danger btn-header btn-header-danger"><i class="fa fa-sign-out"></i>&nbsp;Sair</a>
             </li>
             {% else %}
-            <li><a style="color: white">você não esta logado!</a></li>        <li><a href="/login" class="btn btn-success btn-header btn-header-success ">Logar</a></li> <li><a href="/signup" class="btn btn-success btn-header btn-header-success">Registrar</a></li>
+            <li>
+                <a style="color: white">Você não esta logado!</a>
+            </li>
+            <li>
+                <a href="/login" class="btn-info btn-header btn-header-info "><i class="fa fa-sign-in"></i>&nbsp;Logar</a>
+            </li>
+            <li>
+                <a href="/signup" class="btn-success btn-header btn-header-success"><i class="fa fa-user"></i>&nbsp;Registrar</a>
+            </li>
             {% endif %}
         </ul>
     </div><!--/.nav-collapse -->
