@@ -1,4 +1,4 @@
-Hot Blog
+#Hot Blog
 
 #O que é o Hot Blog ?
 Um simples Blog envolvendo [NodeJs](http://nodejs.org/) e [MongoDB](http://www.mongodb.org/) 
@@ -22,11 +22,12 @@ $ node app.js
 
 Voilá, a mágica já esta acontecendo em http://localhost:8000
 
-
-./app.js - entry point
-./package.json - npm package description
-./posts.js - Posts Data Access Helper
-./sessions.js - Sessions Data Access Helper
-./users.js - Users Data Access Helper
-./views/ - html templates
+```bash
+./app.js - Configuracoes
+./package.json - npm package
+./posts.js - Magicas para os Posts
+./sessions.js - Máagicas para as sessoes
+./users.js - Magicas para os usuarios
+./views/ - Paginas
+```
 
